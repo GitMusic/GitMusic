@@ -1,0 +1,16 @@
+{
+  "name": "spotless",
+  "version": "1.0.0",
+  "description": "A free alternative to Spotify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MetaDark",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "speaker": "^0.3.0",
+    "youtube-search": "^1.0.4",
+    "ytdl-core": "^0.7.15"
+  }
+}
