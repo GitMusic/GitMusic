@@ -1,7 +1,7 @@
 var fs = require('fs');
 var search = require('youtube-search');
 var ytdl = require('ytdl-core');
-var speaker = require('speaker');
+var ffmpeg = require('fluent-ffmpeg');
 
 var config = require('./config.json');
 
@@ -43,10 +43,16 @@ search('the wheels on the bus', {
     getYoutubeStream(firstVideo.id, function(err, stream, format) {
         if (err) return console.log(err);
 
-        // TODO: decode audio stream to PCM
-        console.log(format);
-
-        // var speaker = new Speaker();
-        stream.pipe(fs.createWriteStream('audio'));
+        ffmpeg(stream)
+            .on('start', function() {
+                console.log('Started converting audio:', format.type);
+            })
+            .on('end', function() {
+                console.log('Finished converting');
+            })
+            .on('error', function(err) {
+                console.log(err);
+            })
+            .save('audio.wav');
     });
 });
