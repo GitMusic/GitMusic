@@ -1,0 +1,29 @@
+{
+  "name": "Spotless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "pretty-bytes": "^3.0.1"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.0",
+    "grunt": "^1.0.1",
+    "grunt-bowercopy": "^1.2.4",
+    "grunt-bump": "0.8.0",
+    "grunt-changelog": "^0.3.2",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-processhtml": "^0.3.13",
+    "gruntfile-gtx": "^0.3.0",
+    "require-directory": "^2.1.1"
+  },
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
