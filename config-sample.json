@@ -1,3 +1,4 @@
 {
-    "key": "<youtube api key>",
+    "youtubeKey": "<youtube api key>",
+    "cacheDir": "cache"
 }

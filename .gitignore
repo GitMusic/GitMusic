@@ -1,5 +1,5 @@
+/cache/
 /config.json
-/node_modules/
-desktop/node_modules/
+/node_modules/desktop/node_modules/
 desktop/bower_components/
 desktop/src/vendor/
