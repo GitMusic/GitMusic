@@ -9,6 +9,7 @@
   "author": "MetaDark",
   "license": "GPL-3.0",
   "dependencies": {
+    "bluebird": "^3.4.0",
     "fluent-ffmpeg": "^2.1.0",
     "youtube-search": "^1.0.4",
     "ytdl-core": "^0.7.15"

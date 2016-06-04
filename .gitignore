@@ -1,5 +1,6 @@
 /cache/
 /config.json
-/node_modules/desktop/node_modules/
-desktop/bower_components/
-desktop/src/vendor/
+/desktop/bower_components/
+/desktop/node_modules/
+/desktop/src/vendor/
+/node_modules/
