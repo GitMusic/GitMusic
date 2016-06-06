@@ -12,16 +12,17 @@ function streamFirstResult(term) {
             return [youtube.stream(first.id), first.id];
         })
         .spread((stream, id) => {
-            var download = {total: 0};
+            // Show download progress in stdout
             stream.on('response', res => {
-                download.size = parseInt(res.headers['content-length'], 10);
-                console.log('Started downloading: ' + id + ' (' + download.size + ' bytes)');
-            });
+                var size, total = 0;
+                size = parseInt(res.headers['content-length'], 10);
+                console.log('Started downloading: ' + id + ' (' + size + ' bytes)');
 
-            stream.on('data', chunk => {
-                download.total += chunk.length;
-                var percent = download.total / download.size * 100;
-                console.log('Downloaded: ' + percent.toFixed(2) + '% of ' + id);
+                stream.on('data', chunk => {
+                    total += chunk.length;
+                    var percent = total / size * 100;
+                    console.log('Downloaded: ' + percent.toFixed(2) + '% of ' + id);
+                });
             });
 
             // Cache stream

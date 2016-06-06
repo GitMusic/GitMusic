@@ -26,17 +26,17 @@ class Player {
                     sampleRate: parseInt(details[1], 10),
                     channels: channelStrToNum[details[2]]
                 });
+
+                if (this.playing) this.play();
             })
             .format('s16le')
             .pipe();
-
-        if (this.playing) this.play();
     }
 
     play() {
         this.playing = true;
         if (!this.pcmStream) return;
-        this.pcmStream.on('data', (chunk, enc) => {
+        this.pcmStream.on('data', chunk => {
             if (!this.speaker) return console.log('Warning: Speaker uninitialized');
             this.speaker.write(chunk);
         });
