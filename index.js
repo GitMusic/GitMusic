@@ -34,5 +34,5 @@ function streamFirstResult(term) {
 var player = new Player();
 player.play();
 
-streamFirstResult('wish you were here')
+streamFirstResult(process.argv.slice(2).join(' '))
     .then(stream => player.stream(stream));
