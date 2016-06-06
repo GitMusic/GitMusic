@@ -39,25 +39,22 @@ class Player {
 
     play() {
         this.playing = true;
-        if (!this.pcmStream) return;
-        this.pcmStream.on('data', chunk => {
-            if (!this.speaker) return console.log('Warning: Speaker uninitialized');
-            this.speaker.write(chunk);
-        });
+        if (!this.pcmStream && !this.speaker) return;
+        this.pcmStream.pipe(this.speaker);
     }
 
     pause() {
         this.playing = false;
-        if (!this.stream) return;
-        console.log('pause');
+        if (!this.pcmStream && !this.speaker) return;
+        this.pcmStream.unpipe(this.speaker);
     }
 
     volume(volume) {
         console.log('volume');
     }
 
-    shuffle(state) {
-        console.log('shuffle', state);
+    seek(pos) {
+        console.log('seek', pos);
     }
 
     next() {
@@ -68,8 +65,8 @@ class Player {
         console.log('prev');
     }
 
-    seek(pos) {
-        console.log('seek', pos);
+    shuffle(state) {
+        console.log('shuffle', state);
     }
 }
 
