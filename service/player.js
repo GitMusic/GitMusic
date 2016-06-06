@@ -1,7 +1,7 @@
 var ffmpeg = require('fluent-ffmpeg');
 var Speaker = require('speaker');
 
-var config = require('../config.json');
+var config = require('../config.json').playback;
 
 var channelStrToNum = {
     'mono': 1,

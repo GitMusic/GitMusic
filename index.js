@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var config = require('./config.json');
+var cache = require('./config.json').cache;
 var Player = require('./service/player');
 var youtube = require('./service/providers/youtube');
 
@@ -26,8 +26,11 @@ function streamFirstResult(term) {
             });
 
             // Cache stream
-            var cachefile = path.join(config.cacheDir, id);
-            stream.pipe(fs.createWriteStream(cachefile));
+            if (cache.enabled) {
+                var cachefile = path.join(cache.dir, id);
+                stream.pipe(fs.createWriteStream(cachefile));
+            }
+
             return stream;
         });
 }

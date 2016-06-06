@@ -1,5 +1,12 @@
 {
-    "youtubeKey": "<youtube api key>",
-    "cacheDir": "cache",
-    "bitDepth": 32
+    "youtube": {
+        "key": "<youtube api key>"
+    },
+    "cache": {
+        "enabled": true,
+        "dir": "cache"
+    },
+    "playback": {
+        "bitDepth": 32
+    }
 }

@@ -2,13 +2,13 @@ var Promise = require('bluebird');
 var ytsearch = Promise.promisify(require('youtube-search'));
 var ytdl = Promise.promisifyAll(require('ytdl-core'));
 
-var config = require('../../config.json');
+var config = require('../../config.json').youtube;
 
 module.exports = {
     search: term =>
         ytsearch(term, {
             maxResults: 5,
-            key: config.youtubeKey
+            key: config.key
         })
         .then(results => results
               .filter(result => result.kind == 'youtube#video')
