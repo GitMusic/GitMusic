@@ -1,4 +1,5 @@
 {
     "youtubeKey": "<youtube api key>",
-    "cacheDir": "cache"
+    "cacheDir": "cache",
+    "bitDepth": 32
 }

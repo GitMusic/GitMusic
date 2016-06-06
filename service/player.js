@@ -1,6 +1,8 @@
 var ffmpeg = require('fluent-ffmpeg');
 var Speaker = require('speaker');
 
+var config = require('../config.json');
+
 var channelStrToNum = {
     'mono': 1,
     'stereo': 2
@@ -24,12 +26,14 @@ class Player {
                 var details = data.audio_details;
                 this.speaker = new Speaker({
                     sampleRate: parseInt(details[1], 10),
-                    channels: channelStrToNum[details[2]]
+                    channels: channelStrToNum[details[2]],
+                    bitDepth: config.bitDepth
                 });
 
                 if (this.playing) this.play();
             })
-            .format('s16le')
+            .format(config.bitDepth == 8 ?
+                    'u8' : 's' + config.bitDepth + 'le')
             .pipe();
     }
 
