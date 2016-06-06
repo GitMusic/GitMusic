@@ -1,9 +1,9 @@
-var ffmpeg = require('fluent-ffmpeg');
-var Speaker = require('speaker');
+const ffmpeg = require('fluent-ffmpeg');
+const Speaker = require('speaker');
 
-var config = require('../config.json').playback;
+const config = require('../config.json').playback;
 
-var channelStrToNum = {
+const channelStrToNum = {
     'mono': 1,
     'stereo': 2
 };
@@ -23,7 +23,7 @@ class Player {
 
         this.pcmStream = ffmpeg(stream)
             .on('codecData', data => {
-                var details = data.audio_details;
+                let details = data.audio_details;
                 this.speaker = new Speaker({
                     sampleRate: parseInt(details[1], 10),
                     channels: channelStrToNum[details[2]],
