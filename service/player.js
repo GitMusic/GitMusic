@@ -1,4 +1,4 @@
-const ffmpeg = require('fluent-ffmpeg');
+const ffmpeg = require('easy-ffmpeg');
 const Speaker = require('speaker');
 
 const config = require('../config.json').playback;

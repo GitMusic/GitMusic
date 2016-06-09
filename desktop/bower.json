@@ -1,7 +1,6 @@
 {
   "name": "spotless",
   "description": "",
-  "main": "main.js",
   "authors": [
     "Matt Langlois <fletchto99@gmail.com>"
   ],

@@ -1,13 +1,9 @@
 {
-  "name": "Spotless",
+  "name": "spotless",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
-  "dependencies": {
-    "pretty-bytes": "^3.0.1"
-  },
+  "main": "GruntFile.js",
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0",
     "grunt": "^1.0.1",
     "grunt-bowercopy": "^1.2.4",
     "grunt-bump": "0.8.0",
@@ -21,9 +17,5 @@
     "gruntfile-gtx": "^0.3.0",
     "require-directory": "^2.1.1"
   },
-  "scripts": {
-    "start": "electron main.js"
-  },
-  "author": "",
-  "license": "ISC"
+  "author": ""
 }
