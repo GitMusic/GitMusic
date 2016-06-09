@@ -1,38 +1,36 @@
-var fs = require('fs');
-var path = require('path');
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
 
-var config = require('./config.json');
-var Player = require('./service/player');
-var youtube = require('./service/providers/youtube');
+let mainWindow;
 
-function streamFirstResult(term) {
-    return youtube.search(term)
-        .then(videos => {
-            var first = videos[0];
-            return [youtube.stream(first.id), first.id];
-        })
-        .spread((stream, id) => {
-            var download = {total: 0};
-            stream.on('response', res => {
-                download.size = parseInt(res.headers['content-length'], 10);
-                console.log('Started downloading: ' + id + ' (' + download.size + ' bytes)');
-            });
+function createWindow() {
 
-            stream.on('data', chunk => {
-                download.total += chunk.length;
-                var percent = download.total / download.size * 100;
-                console.log('Downloaded: ' + percent.toFixed(2) + '% of ' + id);
-            });
+    require('./service/index');
 
-            // Cache stream
-            var cachefile = path.join(config.cacheDir, id);
-            stream.pipe(fs.createWriteStream(cachefile));
-            return stream;
-        });
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        frame: false
+    });
+
+    mainWindow.loadURL('file://${__dirname}/desktop/src/index.html');
+
+    mainWindow.on('closed', function () {
+        mainWindow = null
+    });
 }
 
-var player = new Player();
-player.play();
+app.on('ready', createWindow);
 
-streamFirstResult('wish you were here')
-    .then(stream => player.stream(stream));
+app.on('window-all-closed', function() {
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
+});
+
+app.on('activate', function () {
+    if (mainWindow === null) {
+        createWindow()
+    }
+});

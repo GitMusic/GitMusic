@@ -8,7 +8,7 @@ module.exports = {
     search: term =>
         ytsearch(term, {
             maxResults: 5,
-            key: config.youtubeKey
+            key: config.youtube_api_key
         })
         .then(results => results
               .filter(result => result.kind == 'youtube#video')

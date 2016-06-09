@@ -1,4 +1,4 @@
-var ffmpeg = require('fluent-ffmpeg');
+var ffmpeg = require('easy-ffmpeg');
 var Speaker = require('speaker');
 
 var channelStrToNum = {
