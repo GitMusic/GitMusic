@@ -19,13 +19,14 @@ module.exports = {
     stream: id => {
         let url = 'https://www.youtube.com/watch?v=' + encodeURIComponent(id);
         return ytdl.getInfoAsync(url).then(info => {
-            let audioFormats = info.formats.filter(format => {
+            let formats = info.formats;
+            let audioFormats = formats.filter(format => {
                 return format.type.indexOf('audio') != -1;
             });
 
-            let format = audioFormats[0];
-            if (!format) throw new Error('No available audio stream');
-            return ytdl.downloadFromInfo(info, {format: format});
+            return ytdl.downloadFromInfo(info, {
+                format: audioFormats[0] || formats[0]
+            });
         });
     },
 }
