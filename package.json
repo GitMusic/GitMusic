@@ -9,13 +9,13 @@
   "author": "MetaDark",
   "license": "GPL-3.0",
   "dependencies": {
-    "bluebird": "^3.4.0",
+    "bluebird": "^3.4.1",
     "pretty-bytes": "^3.0.1",
     "speaker": "^0.3.0",
     "youtube-search": "^1.0.4",
-    "ytdl-core": "^0.7.15"
+    "ytdl-core": "^0.7.16"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0"
+    "electron-prebuilt": "^1.2.5"
   }
 }

@@ -1,8 +1,8 @@
 module.exports = {
     dist: {
         files: {
-            'dist/js/app.min.js': ['src/js/**.js'],
-            'dist/css/app.min.css': ['src/css/**.css']
+            'dist/js/app.min.js': ['src/js/**/*.js'],
+            'dist/vendor/js/libs.min.js': ['src/vendor/**/*.js']
         }
     }
 };

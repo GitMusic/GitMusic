@@ -9,13 +9,20 @@ module.exports = {
             }
         ]
     },
-    vendor: {
+    vendor_fonts: {
         files: [
             {
                 expand: true,
-                src: ['vendor/**'],
+                flatten: true,
+                src: [
+                    'vendor/**/*.otf',
+                    'vendor/**/*.eot',
+                    'vendor/**/*.svg',
+                    'vendor/**/*.ttf',
+                    'vendor/**/*.woff',
+                    'vendor/**/*.woff2'],
                 cwd: 'src/',
-                dest: "dist/"
+                dest: "dist/vendor/fonts"
             }
         ]
     }

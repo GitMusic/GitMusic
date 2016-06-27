@@ -15,6 +15,7 @@ module.exports = function (grunt) {
         'sass',
         'copy',
         'processhtml',
+        'cssmin',
         'uglify',
         'clean:tmp'
     ]);
