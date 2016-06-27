@@ -1,52 +1,34 @@
-const ffmpeg = require('easy-ffmpeg');
 const Speaker = require('speaker');
 
-const config = require('../config.json').playback;
-
-const channelStrToNum = {
-    'mono': 1,
-    'stereo': 2
-};
+const playback = require('../config.json').playback;
 
 class Player {
     constructor() {
-        this.playing = false;
-        this.pcmStream = null;
-        this.speaker = null;
+        this._playing = false;
+        this._stream = null;
+        this._speaker = new Speaker({
+            sampleRate: playback.sampleRate,
+            channels: playback.channels,
+            bitDepth: playback.bitDepth
+        });
     }
 
     stream(stream) {
-        if (!stream) {
-            this.pcmStream = null;
-            return;
-        }
+        if (!stream) return;
 
-        this.pcmStream = ffmpeg(stream)
-            .on('codecData', data => {
-                let details = data.audio_details;
-                this.speaker = new Speaker({
-                    sampleRate: parseInt(details[1], 10),
-                    channels: channelStrToNum[details[2]],
-                    bitDepth: config.bitDepth
-                });
-
-                if (this.playing) this.play();
-            })
-            .format(config.bitDepth == 8 ?
-                    'u8' : 's' + config.bitDepth + 'le')
-            .pipe();
+        if (this._stream) this._stream.unpipe(this._speaker);
+        this._stream = stream;
+        if (this._playing) this._stream.pipe(this._speaker);
     }
 
     play() {
-        this.playing = true;
-        if (!this.pcmStream && !this.speaker) return;
-        this.pcmStream.pipe(this.speaker);
+        this._playing = true;
+        if (this._stream) this._stream.pipe(this._speaker);
     }
 
     pause() {
-        this.playing = false;
-        if (!this.pcmStream && !this.speaker) return;
-        this.pcmStream.unpipe(this.speaker);
+        this._playing = false;
+        if (this._stream) this._stream.unpipe(this._speaker);
     }
 
     volume(volume) {

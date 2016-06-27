@@ -2,11 +2,9 @@
     "youtube": {
         "key": "<youtube api key>"
     },
-    "cache": {
-        "enabled": true,
-        "dir": "cache"
-    },
     "playback": {
-        "bitDepth": 32
+        "sampleRate": 44100,
+        "channels": 2,
+        "bitDepth": 16
     }
 }

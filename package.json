@@ -10,7 +10,6 @@
   "license": "GPL-3.0",
   "dependencies": {
     "bluebird": "^3.4.0",
-    "easy-ffmpeg": "0.0.13",
     "pretty-bytes": "^3.0.1",
     "speaker": "^0.3.0",
     "youtube-search": "^1.0.4",
