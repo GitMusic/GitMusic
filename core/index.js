@@ -1,3 +1,4 @@
+const AudioStream = require('./audio-stream');
 const Player = require('./player');
 const youtube = require('./providers/youtube');
 
@@ -6,5 +7,5 @@ player.play();
 
 youtube.search(process.argv.slice(2).join(' '))
     .then(videos => videos[0].id)
-    .then(youtube.stream)
-    .then(stream => player.stream(stream));
+    .then(youtube.source)
+    .then(source => player.stream(new AudioStream(source)));

@@ -1,21 +1,18 @@
 const Speaker = require('speaker');
-
-const playback = require('../config.json').playback;
+const config = require('../config.json').playback;
 
 class Player {
     constructor() {
         this._playing = false;
         this._stream = null;
         this._speaker = new Speaker({
-            sampleRate: playback.sampleRate,
-            channels: playback.channels,
-            bitDepth: playback.bitDepth
+            sampleRate: config.sampleRate,
+            channels: config.channels,
+            bitDepth: config.bitDepth
         });
     }
 
     stream(stream) {
-        if (!stream) return;
-
         if (this._stream) this._stream.unpipe(this._speaker);
         this._stream = stream;
         if (this._playing) this._stream.pipe(this._speaker);
@@ -35,8 +32,8 @@ class Player {
         console.log('volume');
     }
 
-    seek(pos) {
-        console.log('seek', pos);
+    seek(seconds) {
+        if (this._stream) this._stream.seek(seconds);
     }
 
     next() {
