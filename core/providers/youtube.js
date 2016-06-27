@@ -5,8 +5,8 @@ const ytdl = Promise.promisifyAll(require('ytdl-core'));
 const config = require('../../config.json').youtube;
 
 module.exports = {
-    search: term =>
-        ytsearch(term, {
+    search: query =>
+        ytsearch(query, {
             maxResults: 5,
             key: config.key
         })

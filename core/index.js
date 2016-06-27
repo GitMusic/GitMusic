@@ -2,16 +2,14 @@ const readline = require('readline');
 const process = require('process');
 
 const Player = require('./player');
-const youtube = require('./providers/youtube');
 
 const player = new Player();
 const commands = {
     'l': (...words) => {
         const query = words.join(' ');
         console.log('Searching: ' + query);
-        youtube.search(query)
+        player.search(query)
             .then(videos => videos[0].id)
-            .then(youtube.source)
             .then(source => {
                 console.log('Loading: ' + query);
                 player.load(source);
@@ -56,5 +54,5 @@ const rl = readline.createInterface({
 });
 
 if (process.argv.length > 2) {
-    commands.l.apply(null, process.argv.slice(2));
+    commands.p.apply(null, process.argv.slice(2));
 }

@@ -2,6 +2,7 @@ const Speaker = require('speaker');
 
 const AudioStream = require('./audio-stream');
 const config = require('../config.json').playback;
+const youtube = require('./providers/youtube');
 
 class Player {
     constructor() {
@@ -13,11 +14,23 @@ class Player {
             bitDepth: config.bitDepth
         });
     }
+
+    search(query) {
+        return youtube.search(query);
+    }
     
     load(source) {
-        if (this._playing && this._audio) this._audio.unpipe(this._speaker);
-        this._audio = source ? new AudioStream(source) : null;
-        if (this._playing && this._audio) this._audio.pipe(this._speaker);
+        const load = source => {
+            if (this._playing && this._audio) this._audio.unpipe(this._speaker);
+            this._audio = source ? new AudioStream(source) : null;
+            if (this._playing && this._audio) this._audio.pipe(this._speaker);
+        };
+        
+        if (source) {
+            youtube.source(source).then(load);
+        } else {
+            load(null);
+        }
     }
 
     play() {
