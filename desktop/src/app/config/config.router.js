@@ -7,10 +7,9 @@ app.run(['$rootScope', '$state', '$stateParams', 'ngMeta', function ($rootScope,
 }]).config(['$stateProvider', '$urlRouterProvider', 'ngMetaProvider', function ($stateProvider, $urlRouterProvider, ngMetaProvider) {
 
     ngMetaProvider.useTitleSuffix(true);
-    ngMetaProvider.setDefaultTitle(app.name + " | ");
-    ngMetaProvider.setDefaultTitleSuffix(app.version);
-    ngMeta.setTag('description', '....');
-    ngMetaProvider.setDefaultTag('author', app.authors.join(","));
+    ngMetaProvider.setDefaultTitle(app.metadata.name + " | ");
+    ngMetaProvider.setDefaultTitleSuffix(app.metadata.version);
+    ngMetaProvider.setDefaultTag('author', app.metadata.authors.join(","));
 
     $urlRouterProvider.otherwise('/app/dashboard');
     $stateProvider
@@ -21,6 +20,10 @@ app.run(['$rootScope', '$state', '$stateParams', 'ngMeta', function ($rootScope,
         })
         .state('app.dashboard', {
             url: '/dashboard',
-            templateUrl: 'views/pages/dashboard.html'
+            templateUrl: 'views/pages/dashboard.html',
+            meta: {
+                titleSuffix: 'Dashboard',
+                description: 'Main application'
+            }
         })
 }]);
