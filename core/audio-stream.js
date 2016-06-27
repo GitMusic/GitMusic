@@ -2,7 +2,8 @@ const Readable = require('stream').Readable;
 const spawn = require('child_process').spawn;
 const stderr = require('process').stderr;
 
-const config = require('../config.json').playback;
+const config = require('../config.json');
+const playback = require('../config.json').playback;
 
 class AudioStream extends Readable {
     constructor(source, options) {
@@ -20,13 +21,13 @@ class AudioStream extends Readable {
         const seek = seconds ? ['-ss', seconds] : [];
         const args = [
             '-i', this._source,
-            '-ar', config.sampleRate || 44100,
-            '-ac', config.channels || 2,
-            '-f', config.bitDepth == 8 ? 'u8' : 's' + config.bitDepth + 'le',
+            '-ar', playback.sampleRate || 44100,
+            '-ac', playback.channels || 2,
+            '-f', playback.bitDepth == 8 ? 'u8' : 's' + playback.bitDepth + 'le',
             '-'
         ];
 
-        let ffmpeg = spawn('ffmpeg', seek.concat(args));
+        const ffmpeg = spawn('ffmpeg', seek.concat(args));
         this._audio = ffmpeg.stdout;
 
         this._audio.on('data', chunk => {
@@ -39,7 +40,9 @@ class AudioStream extends Readable {
             this.push(null);
         });
 
-        ffmpeg.stderr.pipe(stderr);
+        if (config.developer.enabled) {
+            ffmpeg.stderr.pipe(stderr);
+        }
     }
 
     _read() {
