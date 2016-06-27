@@ -6,15 +6,16 @@ let mainWindow;
 
 function createWindow() {
 
-    require('./core/index');
+    // require('./core/index');
 
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        frame: false
+        // frame: false
     });
 
-    mainWindow.loadURL('file://${__dirname}/desktop/src/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/desktop/src/index.html');
+    mainWindow.webContents.openDevTools({detached:true});
 
     mainWindow.on('closed', function () {
         mainWindow = null

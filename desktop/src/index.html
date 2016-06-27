@@ -2,15 +2,19 @@
 <html lang="en" data-ng-app="app">
     <head>
         <meta charset="utf-8"/>
-        <title ng-bind="app.title"></title>
-        <meta name="description" content="{{app.title}}"/>
+
+        <!-- Dynamic Metadata -->
+        <title ng-bind="ngMeta.title"></title>
+        <meta name="author" content="{{ngMeta.author}}" />
+        <meta name="description" content="{{ngMeta.description}}"/>
+
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
         <link rel="icon" type="image/png" href="resources/images/icon.png">
 
         <!-- build:css vendor/css/libs.min.css -->
-            <link rel="stylesheet" href="vendor/bootstrap-css-only/css/bootstrap.min.css" type="text/css">
-            <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css" type="text/css"/>
+            <link rel="stylesheet" href="vendor/bootstrap-css-only/css/bootstrap.css" type="text/css">
+            <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css" type="text/css"/>
         <!-- /build -->
 
         <!-- build:css css/app.min.css -->
@@ -21,20 +25,34 @@
         <div class="app" id="app" ui-view></div>
         <!-- build:js vendor/js/libs.min.js -->
             <!-- Angular -->
-            <script src="vendor/angular/js/angular.min.js" type="text/javascript"></script>
+            <script src="vendor/angular/js/angular.js" type="text/javascript"></script>
 
             <!-- Angular Animate -->
-            <script src="vendor/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+            <script src="vendor/angular-animate/angular-animate.js" type="text/javascript"></script>
 
             <!-- Angular Bootstrap -->
-            <script src="vendor/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript"></script>
-            <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+            <script src="vendor/angular-bootstrap/ui-bootstrap.js" type="text/javascript"></script>
+            <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js" type="text/javascript"></script>
 
             <!-- Angular Touch -->
-            <script src="vendor/angular-touch/angular-touch.min.js"></script>
+            <script src="vendor/angular-touch/angular-touch.js" type="text/javascript"></script>
+
+            <!-- Angular UI Router -->
+            <script src="vendor/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+
+            <!-- ngMeta -->
+            <script src="vendor/ngMeta/dist/ngMeta.js" type="text/javascript"></script>
         <!-- /build -->
 
-        <!-- build:js js/app.min.js -->
+        <!-- build:js app/app.min.js -->
+
+            <!-- Application & Configurations -->
+            <script src="app/app.js" type="text/javascript"></script>
+            <script src="app/config/config.js" type="text/javascript"></script>
+            <script src="app/config/config.router.js" type="text/javascript"></script>
+
+            <!-- Initialization -->
+            <script src="app/main.js" type="text/javascript"></script>
         <!-- /build -->
     </body>
 </html>
