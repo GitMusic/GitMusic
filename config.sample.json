@@ -1,4 +1,7 @@
 {
+    "developer": {
+        "enabled": false
+    },
     "youtube": {
         "key": "<youtube api key>"
     },

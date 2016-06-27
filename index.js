@@ -2,6 +2,8 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+const config = require('./config.json');
+
 let mainWindow;
 
 function createWindow() {
@@ -11,11 +13,14 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        // frame: false
+        frame: config.developer.enabled
     });
 
     mainWindow.loadURL('file://' + __dirname + '/desktop/src/index.html');
-    mainWindow.webContents.openDevTools({detached:true});
+    
+    if (config.developer.enabled) {
+        mainWindow.webContents.openDevTools({detached: true});
+    }
 
     mainWindow.on('closed', function () {
         mainWindow = null
