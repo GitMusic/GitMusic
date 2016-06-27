@@ -6,7 +6,7 @@ let mainWindow;
 
 function createWindow() {
 
-    require('./service/index');
+    require('./core/index');
 
     mainWindow = new BrowserWindow({
         width: 800,
