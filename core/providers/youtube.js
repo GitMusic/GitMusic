@@ -5,16 +5,15 @@ const ytdl = Promise.promisifyAll(require('ytdl-core'));
 const config = require('../../config.json').youtube;
 
 module.exports = {
-    search: query =>
-        ytsearch(query, {
+    search(query) {
+        return ytsearch(query, {
             maxResults: 5,
             key: config.key
-        })
-        .then(results => results
-              .filter(result => result.kind == 'youtube#video')
-              .map(video => ({id: video.id}))),
-
-    source: id => {
+        }).then(results => results
+                .filter(result => result.kind == 'youtube#video')
+                .map(video => ({id: video.id})))
+    },
+    source(id) {
         const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
         return ytdl.getInfoAsync(url).then(info => {
             const formats = info.formats;
