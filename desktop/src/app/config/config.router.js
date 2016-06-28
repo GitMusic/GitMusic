@@ -18,12 +18,12 @@ app.run(['$rootScope', '$state', '$stateParams', 'ngMeta', function ($rootScope,
             url: '/app',
             templateUrl: "views/app.html"
         })
-        .state('app.dashboard', {
-            url: '/dashboard',
-            templateUrl: 'views/pages/dashboard.html',
-            meta: {
-                titleSuffix: 'Dashboard',
-                description: 'Main application'
-            }
-        })
+            .state('app.dashboard', {
+                url: '/dashboard',
+                templateUrl: 'views/pages/dashboard.html',
+                meta: {
+                    titleSuffix: 'Dashboard',
+                    description: 'Main application'
+                }
+            })
 }]);
