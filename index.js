@@ -16,7 +16,7 @@ function createWindow() {
         frame: config.developer.enabled
     });
 
-    mainWindow.loadURL(`file://${__dirname}/desktop/src/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/desktop/${!config.developer.enabled ? 'src' : 'dist'}/index.html`);
     
     if (config.developer.enabled) {
         mainWindow.webContents.openDevTools({detached: true});

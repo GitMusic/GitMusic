@@ -14,9 +14,12 @@ module.exports = function (grunt) {
         'bowercopy',
         'sass',
         'copy',
-        'processhtml',
-        'cssmin',
-        'uglify',
+        'useminPrepare',
+        'concat:generated',
+        'cssmin:generated',
+        'uglify:generated',
+        'usemin',
+        'htmlmin:dist',
         'clean:tmp'
     ]);
 
