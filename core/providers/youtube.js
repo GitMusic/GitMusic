@@ -15,7 +15,7 @@ module.exports = {
               .map(video => ({id: video.id}))),
 
     source: id => {
-        const url = 'https://www.youtube.com/watch?v=' + encodeURIComponent(id);
+        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
         return ytdl.getInfoAsync(url).then(info => {
             const formats = info.formats;
             const audioFormats = formats.filter(format => {

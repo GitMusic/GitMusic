@@ -7,11 +7,11 @@ const player = new Player();
 const commands = {
     'l': (...words) => {
         const query = words.join(' ');
-        console.log('Searching: ' + query);
+        console.log(`Searching: ${query}`);
         player.search(query)
             .then(videos => videos[0].id)
             .then(source => {
-                console.log('Loading: ' + query);
+                console.log(`Loading: ${query}`);
                 player.load(source);
             });
     },
@@ -30,7 +30,7 @@ const commands = {
         }
     },
     's': (seconds) => {
-        console.log('Seeking: ' + seconds);
+        console.log(`Seeking: ${seconds}`);
         player.seek(seconds);
     },
     'q': () => {
@@ -46,7 +46,7 @@ const rl = readline.createInterface({
     const [command, ...args] = line.split(' ');
     const action = commands[command];
     if (!action) {
-        console.error('Invalid command: ' + command);
+        console.error(`Invalid command: ${command}`);
         return;
     }
 

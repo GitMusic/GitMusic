@@ -23,7 +23,7 @@ class AudioStream extends Readable {
             '-i', this._source,
             '-ar', playback.sampleRate || 44100,
             '-ac', playback.channels || 2,
-            '-f', playback.bitDepth == 8 ? 'u8' : 's' + playback.bitDepth + 'le',
+            '-f', playback.bitDepth == 8 ? 'u8' : `s${playback.bitDepth}le`,
             '-'
         ];
 
