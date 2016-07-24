@@ -1,9 +1,13 @@
 {
-  "name": "spotless",
+  "name": "spotless-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "GruntFile.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
   "devDependencies": {
+    "electron-prebuilt": "^1.2.8",
     "grunt": "^1.0.1",
     "grunt-bowercopy": "^1.2.4",
     "grunt-bump": "0.8.0",

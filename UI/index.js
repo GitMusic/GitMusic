@@ -2,13 +2,11 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
-const config = require('./config.json');
+const config = require('../config.json');
 
 let mainWindow;
 
 function createWindow() {
-
-    // require('./core/index');
 
     mainWindow = new BrowserWindow({
         width: 800,
@@ -16,7 +14,7 @@ function createWindow() {
         frame: config.developer.enabled
     });
 
-    mainWindow.loadURL(`file://${__dirname}/desktop/${!config.developer.enabled ? 'src' : 'dist'}/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/${!config.developer.enabled ? 'src' : 'dist'}/index.html`);
     
     if (config.developer.enabled) {
         mainWindow.webContents.openDevTools({detached: true});
