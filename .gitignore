@@ -7,3 +7,4 @@
 /UI/src/vendor/
 /UI/.tmp/
 core/node_modules/
+core/bin/
