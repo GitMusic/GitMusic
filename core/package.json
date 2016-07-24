@@ -1,0 +1,20 @@
+{
+  "name": "spotless",
+  "version": "1.0.0",
+  "description": "A free alternative to Spotify",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js"
+  },
+  "author": "MetaDark",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "audio-speaker": "^1.2.4",
+    "bluebird": "^3.4.1",
+    "request": "^2.74.0",
+    "request-progress": "^2.0.1",
+    "tarball-extract": "0.0.3",
+    "youtube-search": "^1.0.6",
+    "ytdl-core": "^0.7.17"
+  }
+}

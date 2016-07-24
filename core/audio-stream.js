@@ -6,9 +6,10 @@ const config = require('../config.json');
 const playback = require('../config.json').playback;
 
 class AudioStream extends Readable {
-    constructor(source, options) {
+    constructor(source, ffmpegPath, options) {
         super(options);
         this._source = source;
+        this._ffmpegPath = ffmpegPath;
         this._audio = null;
         this.seek(0);
     }
@@ -27,7 +28,7 @@ class AudioStream extends Readable {
             '-'
         ];
 
-        const ffmpeg = spawn('ffmpeg', seek.concat(args));
+        const ffmpeg = spawn(this._ffmpegPath, seek.concat(args));
         this._audio = ffmpeg.stdout;
 
         this._audio.on('data', chunk => {

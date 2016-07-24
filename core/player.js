@@ -1,11 +1,12 @@
-const Speaker = require('speaker');
+const Speaker = require('audio-speaker');
 
 const AudioStream = require('./audio-stream');
 const config = require('../config.json').playback;
 const youtube = require('./providers/youtube');
 
 class Player {
-    constructor() {
+    constructor(ffmpegPath) {
+        this._ffmpegPath = ffmpegPath;
         this._playing = false;
         this._audio = null;
         this._speaker = new Speaker({
@@ -18,14 +19,14 @@ class Player {
     search(query) {
         return youtube.search(query);
     }
-    
+
     load(source) {
         const load = source => {
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
-            this._audio = source ? new AudioStream(source) : null;
+            this._audio = source ? new AudioStream(source, this._ffmpegPath) : null;
             if (this._playing && this._audio) this._audio.pipe(this._speaker);
         };
-        
+
         if (source) {
             youtube.source(source).then(load);
         } else {
@@ -49,7 +50,7 @@ class Player {
         if (!this._audio) throw 'No audio loaded';
         this._audio.seek(seconds);
     }
-    
+
     volume(volume) {
         console.log('volume');
     }
