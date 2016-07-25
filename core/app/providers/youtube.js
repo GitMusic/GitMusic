@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const ytsearch = Promise.promisify(require('youtube-search'));
 const ytdl = Promise.promisifyAll(require('ytdl-core'));
 
-const config = require('../../config.json').youtube;
+const config = require('../../../config.json').sources.youtube;
 
 module.exports = {
     search(query) {
@@ -25,4 +25,4 @@ module.exports = {
             return format.url;
         });
     },
-}
+};

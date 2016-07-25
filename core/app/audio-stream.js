@@ -2,8 +2,8 @@ const Readable = require('stream').Readable;
 const spawn = require('child_process').spawn;
 const stderr = require('process').stderr;
 
-const config = require('../config.json');
-const playback = require('../config.json').playback;
+const config = require('../../config.json');
+const playback = config.playback;
 
 class AudioStream extends Readable {
     constructor(source, ffmpegPath, options) {

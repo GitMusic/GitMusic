@@ -1,8 +1,8 @@
 const readline = require('readline');
 const process = require('process');
 
-const Player = require('./player');
-const util = require('./util');
+const Player = require('./app/player');
+const util = require('./app/utils/util');
 
 const player = new Player(util.getffmpegBinaryPath());
 const commands = {

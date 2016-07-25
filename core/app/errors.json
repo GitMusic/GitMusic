@@ -1,0 +1,14 @@
+{
+    "COMMAND_NOT_FOUND": {
+        "code": 0,
+        "message": "Command not found"
+    },
+    "NO_QUERY_PROVIDED": {
+        "code": 1,
+        "message": "No query provided!"
+    },
+    "NO_SONG_PROVIDED": {
+        "code": 1,
+        "message": "No song provided!"
+    }
+}

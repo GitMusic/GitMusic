@@ -11,9 +11,12 @@
   "dependencies": {
     "audio-speaker": "^1.2.4",
     "bluebird": "^3.4.1",
+    "colors": "^1.1.2",
     "request": "^2.74.0",
     "request-progress": "^2.0.1",
     "tarball-extract": "0.0.3",
+    "util": "^0.10.3",
+    "ws": "^1.1.1",
     "youtube-search": "^1.0.6",
     "ytdl-core": "^0.7.17"
   }

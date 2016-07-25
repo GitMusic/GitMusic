@@ -3,13 +3,13 @@ const tarball = require('tarball-extract');
 const request = require('request');
 const progress = require('request-progress');
 const fs = require('fs');
-const config = require('../config.json');
+const config = require('../../../config.json');
 
 module.exports = {
 
 
     getffmpegBinaryPath() {
-        let base = `${__dirname}/bin/ffmpeg`;
+        let base = `${__dirname}/../../bin/ffmpeg`;
         switch(process.platform) {
             case 'linux':
                 return `${base}/linux/ia32/ffmpeg`;
@@ -40,7 +40,7 @@ module.exports = {
                 })
                 .pipe(fs.createWriteStream(ffmpeg))
                 .on('close', () => {
-                    tarball.extractTarball(ffmpeg, `${__dirname}/bin`, (err) => {
+                    tarball.extractTarball(ffmpeg, `${__dirname}/../../bin`, (err) => {
                         err && reject(err);
                         fs.unlink(ffmpeg, (err) => {
                             err && reject(err);

@@ -1,7 +1,7 @@
 const Speaker = require('audio-speaker');
 
 const AudioStream = require('./audio-stream');
-const config = require('../config.json').playback;
+const config = require('../../config.json').playback;
 const youtube = require('./providers/youtube');
 
 class Player {
@@ -17,6 +17,7 @@ class Player {
     }
 
     search(query) {
+        //TODO: Return source + results when support for multiple sources is enabled
         return youtube.search(query);
     }
 
