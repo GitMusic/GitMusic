@@ -1,1 +1,66 @@
 @import "utils/variables.scss";
+@import "components/header.scss";
+@import "components/controls.scss";
+@import "components/menu.scss";
+
+html, body, .app {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    color: #fff;
+}
+
+.contents {
+    display: flex;
+    flex-grow: 1;
+}
+
+.bar {
+    padding: 10px;
+    background-color: #333;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-color: #E67E22;
+}
+
+button {
+    font-size: 1.2em;
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 200ms, color 200ms;
+}
+
+button:hover {
+    transform: scale(1.2);
+    color: cyan;
+}
+
+input[type='range'] {
+    -webkit-appearance: none;
+    outline: none;
+    background: #444;
+    height: 10px;
+    border-radius: 10px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    transition: transform 200ms, border-radius 200ms;
+    cursor: pointer;
+    background: cyan;
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+}
+
+input[type='range']:hover::-webkit-slider-thumb {
+    transform: scale(2);
+}

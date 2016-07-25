@@ -1,19 +1,8 @@
-<!-- navbar -->
-<div data-ng-include=" 'views/components/header.html' ">
-</div>
-<!-- / navbar -->
+<header class="header bar" data-ng-include="'views/components/header.html'"></header>
 
-<!-- menu -->
-<div data-ng-include=" 'views/components/menu.html' ">
+<div class="contents">
+  <nav class="menu bar" data-ng-include="'views/components/menu.html'"></nav>
+  <div class="app-content" ng-controller="Dashboard" ui-view></div>
 </div>
-<!-- / menu -->
 
-<!-- content -->
-<div class="app-content" ui-view>
-</div>
-<!-- /content -->
-
-<!-- controls -->
-<div data-ng-include=" 'views/components/controls.html' ">
-</div>
-<!-- /controls -->
+<footer class="controls bar" data-ng-include="'views/components/controls.html'"></footer>
