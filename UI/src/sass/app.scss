@@ -28,17 +28,13 @@ html, body, .app {
     border-color: #E67E22;
 }
 
-button {
-    font-size: 1.2em;
-    background: none;
-    border: none;
-    outline: none;
-    color: #fff;
+ng-md-icon {
+    fill: #fff;
     cursor: pointer;
     transition: transform 200ms, color 200ms;
 }
 
-button:hover {
+ng-md-icon:hover {
     transform: scale(1.2);
     color: cyan;
 }

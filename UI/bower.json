@@ -15,8 +15,8 @@
   ],
   "dependencies": {
     "angular": "^1.5.7",
-    "font-awesome": "^4.6.3",
     "angular-ui-router": "^0.3.1",
-    "ngMeta": "^0.3.9"
+    "ngMeta": "^0.3.9",
+    "angular-material-icons": "^0.7.1"
   }
 }
