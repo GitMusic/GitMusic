@@ -2,7 +2,7 @@ const Speaker = require('audio-speaker');
 
 const AudioStream = require('./audio-stream');
 const config = require('../../config.json').playback;
-const youtube = require('./providers/youtube');
+const providers = require('./providers');
 
 class Player {
     constructor(ffmpegPath) {
@@ -16,12 +16,7 @@ class Player {
         });
     }
 
-    search(query) {
-        //TODO: Return source + results when support for multiple sources is enabled
-        return youtube.search(query);
-    }
-
-    load(source) {
+    load(source, song) {
         const load = source => {
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
             this._audio = source ? new AudioStream(source, this._ffmpegPath) : null;
@@ -29,10 +24,18 @@ class Player {
         };
 
         if (source) {
-            youtube.source(source).then(load);
+            providers.load(source, song).then(load);
         } else {
             load(null);
         }
+    }
+
+    unload() {
+
+    }
+
+    stop() {
+
     }
 
     play() {

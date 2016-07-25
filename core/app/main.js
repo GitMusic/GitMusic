@@ -1,12 +1,14 @@
 const WebSocketServer = require('ws').Server;
 
 const Player = require('./player');
+const providers = require('./providers');
 const util = require('./utils/ffmpeg');
 const debug = require('./utils/debug');
 const config = require('../../config.json');
 const errors = require('./errors.json');
 
 const player = new Player(util.getffmpegBinaryPath());
+
 
 const wss = new WebSocketServer({
     port: config.server.port
@@ -19,7 +21,7 @@ const commands = {
         } else {
             const query = args.query;
             debug.log(debug.level.info, `Searching: ${query}`);
-            player.search(query).then(songs => resolve(songs));
+            providers.search(query).then(songs => resolve(songs));
         }
 
     }),
@@ -30,6 +32,9 @@ const commands = {
         }
 
         if (player.getLoadedSong !== args.song) {
+            if (player.playing) {
+                player.stop();
+            }
             player.load(args.source, args.song);
         }
 
@@ -94,7 +99,7 @@ wss.on('connection', (ws) => {
 
                 commands[message.command](message.arguments || {}).then(
                     results => {
-                        results && ws.reply(message.command, message.arguments, results)
+                        results && ws.reply(message.command, message.arguments, results);
                         debug.log(debug.level.info, results);
                     },
                     error =>  {
@@ -105,8 +110,15 @@ wss.on('connection', (ws) => {
 
             }
         } catch (error) {
-            ws.error(errors.COMMAND_NOT_FOUND.code, errors.COMMAND_NOT_FOUND.message);
-            debug.log(debug.level.warning, errors.COMMAND_NOT_FOUND);
+            if (!(error instanceof TypeError)) {
+                ws.error(errors.UNKNOWN.code, errors.UNKNOWN.message);
+                debug.log(debug.level.error, error);
+            } else {
+                ws.error(errors.COMMAND_NOT_FOUND.code, errors.COMMAND_NOT_FOUND.message);
+                debug.log(debug.level.warning, errors.COMMAND_NOT_FOUND);
+            }
+
+
         }
     }).on('error', (error) => {
         debug.log(debug.level.info, error)

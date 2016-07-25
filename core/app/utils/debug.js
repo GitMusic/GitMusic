@@ -1,5 +1,6 @@
+require('colors');
 const util = require('util');
-const colors = require('colors');
+
 
 module.exports = {
     level: {

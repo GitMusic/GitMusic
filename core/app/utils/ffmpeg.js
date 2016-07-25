@@ -1,4 +1,3 @@
-const bluebird = require('bluebird');
 const tarball = require('tarball-extract');
 const request = require('request');
 const progress = require('request-progress');

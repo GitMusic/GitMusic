@@ -1,7 +1,11 @@
 {
+    "UNKNOWN": {
+        "code": -1,
+        "message": "An unknown error has occured!"
+    },
     "COMMAND_NOT_FOUND": {
         "code": 0,
-        "message": "Command not found"
+        "message": "Command not found!"
     },
     "NO_QUERY_PROVIDED": {
         "code": 1,
