@@ -27,24 +27,36 @@ const commands = {
     }),
 
     'play': (args) => {
-        if (!args.source || !args.song) {
-            throw errors.NO_SONG_PROVIDED;
-        }
-
-        if (player.getLoadedSong !== args.song) {
-            if (player.playing) {
-                player.stop();
+        return new Promise((resolve, reject) => {
+            if (!args.source || !args.song) {
+                reject(errors.NO_SONG_PROVIDED);
+                return;
             }
-            player.load(args.source, args.song);
-        }
 
-        if (player.playing) {
-            debug.log(debug.level.info, 'Pausing');
-            player.pause();
-        } else {
-            debug.log(debug.level.info, 'Playing');
-            player.play();
-        }
+            // if (player.getLoadedSong !== args.song) {
+            //     if (player.playing) {
+            //         player.stop();
+            //     }
+            //     player.load(args.source, args.song);
+            // }
+
+            player.load(args.source, args.song);
+            if (player.playing) {
+                debug.log(debug.level.info, 'Pausing');
+                player.pause();
+            } else {
+                debug.log(debug.level.info, 'Playing');
+                player.play();
+            }
+
+            wss.clients.forEach(client => {
+                client.reply('play', args, {
+                    'success': `song ${args.song} is now ${player.playing ? 'playing' : 'paused'}`
+                })
+            });
+            resolve();
+        });
+
     },
     'seek': (args) => {
         debug.log(debug.level.info, `Seeking: ${seconds}`);
@@ -117,8 +129,6 @@ wss.on('connection', (ws) => {
                 ws.error(errors.COMMAND_NOT_FOUND.code, errors.COMMAND_NOT_FOUND.message);
                 debug.log(debug.level.warning, errors.COMMAND_NOT_FOUND);
             }
-
-
         }
     }).on('error', (error) => {
         debug.log(debug.level.info, error)
