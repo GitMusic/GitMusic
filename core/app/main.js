@@ -12,6 +12,8 @@ const player = new Player(util.getffmpegBinaryPath());
 
 const wss = new WebSocketServer({
     port: config.server.port
+}, function () {
+    debug.log(debug.level.info, `Websocket server listening on localhost:${config.server.port}`);
 });
 
 const commands = {
@@ -92,11 +94,14 @@ wss.on('connection', (ws) => {
         results: results
     }));
 
-    ws.error = (code, message) => ws.send(JSON.stringify({
-        error: true,
-        code: code,
-        message: message
-    }));
+    ws.error = (code, message) => {
+        debug.log(debug.level.warning, message);
+        ws.send(JSON.stringify({
+            error: true,
+            code: code,
+            message: message
+        }));
+    };
 
     ws.on('message', (message) => {
         debug.log(debug.level.info, `Message "${message}" recieved from ${ws.upgradeReq.connection.remoteAddress}`);
@@ -116,18 +121,17 @@ wss.on('connection', (ws) => {
                     },
                     error =>  {
                         ws.error(error.code, error.message);
-                        debug.log(debug.level.warning, error);
                     }
                 );
 
+            } else {
+                ws.error(errors.COMMAND_NOT_FOUND.code, errors.COMMAND_NOT_FOUND.message);
             }
         } catch (error) {
             if (!(error instanceof TypeError)) {
                 ws.error(errors.UNKNOWN.code, errors.UNKNOWN.message);
-                debug.log(debug.level.error, error);
             } else {
                 ws.error(errors.COMMAND_NOT_FOUND.code, errors.COMMAND_NOT_FOUND.message);
-                debug.log(debug.level.warning, errors.COMMAND_NOT_FOUND);
             }
         }
     }).on('error', (error) => {
