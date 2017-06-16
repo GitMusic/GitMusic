@@ -10,10 +10,10 @@ const commands = {
         const query = words.join(' ');
         console.log(`Searching: ${query}`);
         player.search(query)
-            .then(videos => videos[0].id)
+            .then(results => results[0]['results'][0].id)
             .then(source => {
                 console.log(`Loading: ${query}`);
-                player.load(source);
+                player.load('youtube', source);//TODO: option to switch sources?
             });
     },
     'p': (...words) => {

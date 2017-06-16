@@ -18,7 +18,6 @@ module.exports = {
         return Promise.all(providers.map(provider =>
             provider.functionality.search(query)
         )).then((result => {
-            console.log(result);
             return result.map((results, index) => ({
                 provider: providers[index].source,
                 results: results
