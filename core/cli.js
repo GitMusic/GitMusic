@@ -2,9 +2,9 @@ const readline = require('readline');
 const process = require('process');
 
 const Player = require('./app/player');
-const util = require('./app/utils/util');
+const ffmpeg = require('ffmpeg-static');
 
-const player = new Player(util.getffmpegBinaryPath());
+const player = new Player(ffmpeg.path);
 const commands = {
     'l': (...words) => {
         const query = words.join(' ');

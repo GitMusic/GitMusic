@@ -2,12 +2,12 @@ const WebSocketServer = require('ws').Server;
 
 const Player = require('./player');
 const providers = require('./providers');
-const util = require('./utils/ffmpeg');
 const debug = require('./utils/debug');
 const config = require('../../config.json');
 const errors = require('./errors.json');
+const ffmpeg = require('ffmpeg-static');
 
-const player = new Player(util.getffmpegBinaryPath());
+const player = new Player(ffmpeg.path);
 
 
 const wss = new WebSocketServer({
