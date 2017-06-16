@@ -1,13 +1,18 @@
 {
     "developer": {
-        "enabled": false
+        "enabled": true
     },
-    "youtube": {
-        "key": "<youtube api key>"
+    "sources": {
+        "youtube": {
+            "key": "<API KEY HERE>"
+        }
     },
     "playback": {
         "sampleRate": 44100,
         "channels": 2,
         "bitDepth": 16
+    },
+    "server": {
+      "port": 5004
     }
 }
