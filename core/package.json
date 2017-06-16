@@ -14,10 +14,10 @@
     "colors": "^1.1.2",
     "ffmpeg-static": "^2.0.0",
     "request": "^2.74.0",
-    "request-progress": "^2.0.1",
+    "request-progress": "^3.0.0",
     "util": "^0.10.3",
-    "ws": "^1.1.1",
+    "ws": "^3.0.0",
     "youtube-search": "^1.0.6",
-    "ytdl-core": "^0.7.17"
+    "ytdl-core": "^0.14.4"
   }
 }

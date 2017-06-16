@@ -16,6 +16,10 @@ class Player {
         });
     }
 
+    search(query) {
+        return providers.search(query);
+    }
+
     load(source, song) {
         const load = source => {
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
