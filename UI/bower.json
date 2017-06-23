@@ -1,11 +1,11 @@
 {
-  "name": "spotless",
+  "name": "GitMusic",
   "description": "",
   "authors": [
     "Matt Langlois <fletchto99@gmail.com>"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/MetaDark/spotless",
+  "homepage": "https://github.com/MetaDark/GitMusic",
   "ignore": [
     "**/.*",
     "node_modules",

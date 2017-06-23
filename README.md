@@ -1,2 +1,2 @@
-# spotless
-A free alternative to Spotify
+# GitMusic
+An open source internet music player
