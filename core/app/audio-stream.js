@@ -1,4 +1,5 @@
 const Readable = require('stream').Readable;
+const ffmpegPath = require('ffmpeg-static').path;
 const spawn = require('child_process').spawn;
 const stderr = require('process').stderr;
 
@@ -6,10 +7,9 @@ const config = require('../../config.json');
 const playback = config.playback;
 
 class AudioStream extends Readable {
-    constructor(source, ffmpegPath, options) {
+    constructor(source, options) {
         super(options);
         this._source = source;
-        this._ffmpegPath = ffmpegPath;
         this._audio = null;
         this.seek(0);
     }
@@ -28,7 +28,7 @@ class AudioStream extends Readable {
             '-'
         ];
 
-        const ffmpeg = spawn(this._ffmpegPath, seek.concat(args));
+        const ffmpeg = spawn(ffmpegPath, seek.concat(args));
         this._audio = ffmpeg.stdout;
 
         this._audio.on('data', chunk => {

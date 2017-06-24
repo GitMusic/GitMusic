@@ -1,30 +1,48 @@
 const debug = require('./utils/debug');
+const fs = require('fs');
 
-const base = `${__dirname}/providers`;
-const providers = require("fs").readdirSync(base).filter((provider) => {
-    let functionality = require(`./providers/${provider.substr(0, provider.length - 3)}`);
-    if ('search' in functionality && 'load' in functionality) {
-        return true;
-    }
-    debug.log(debug.level.warning, `Skipping invalid provider ${provider}`);
-    return false;
-}).map(provider => ({
-    source: provider.substr(0, provider.length - 3),
-    functionality: require(`./providers/${provider.substr(0, provider.length - 3)}`),
-}));
+const providers = fs.readdirSync(`${__dirname}/providers`)
+      .map((provider) => {
+          return {
+              id: provider.substr(0, provider.length - 3),
+              api: require(`./providers/${provider}`),
+          }
+      })
+      .filter(({ id, api }) => {
+          const requiredMethods = [
+              'search',
+              'load',
+          ];
+
+          const isValid = requiredMethods
+                .reduce((isValid, method) => isValid && method in api, true);
+
+          if (!isValid) {
+              debug.log(debug.level.warning, `Skipping invalid provider ${id}`);
+          }
+
+          return isValid;
+      });
 
 module.exports = {
     search(query) {
-        return Promise.all(providers.map(provider =>
-            provider.functionality.search(query)
-        )).then((result => {
-            return result.map((results, index) => ({
-                provider: providers[index].source,
-                results: results
+        return Promise.all(providers.map((provider) => {
+            return provider.api.search(query)
+        })).then((allResults) => {
+            // Merge the results from all sources and attach the
+            // provider to each result id
+            // NOTE: I am not sure this is how we want to handle
+            // search results
+            return [].concat.apply([], allResults.map(({ results }, i) => {
+                const provider = providers[i].id;
+                return results.map((result) => {
+                    result.id = { provider, id: result.id };
+                    return result;
+                });
             }));
-        }));
+        });
     },
-    load(source, song) {
-        return providers.find(provider => source == source).functionality.load(song);
+    load({ provider, id }) {
+        return providers.find((provider) => provider === provider).api.load(id);
     }
 };

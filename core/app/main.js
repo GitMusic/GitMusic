@@ -23,9 +23,8 @@ const commands = {
         } else {
             const query = args.query;
             debug.log(debug.level.info, `Searching: ${query}`);
-            providers.search(query).then(songs => resolve(songs));
+            providers.search(query).then(resolve);
         }
-
     }),
 
     'play': (args) => {

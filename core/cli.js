@@ -2,18 +2,19 @@ const readline = require('readline');
 const process = require('process');
 
 const Player = require('./app/player');
-const ffmpeg = require('ffmpeg-static');
 
-const player = new Player(ffmpeg.path);
+const player = new Player();
 const commands = {
     'l': (...words) => {
         const query = words.join(' ');
         console.log(`Searching: ${query}`);
+
+        // Load the first result
         player.search(query)
-            .then(results => results[0]['results'][0].id)
-            .then(source => {
+            .then((results) => results[0].id)
+            .then((id) => {
                 console.log(`Loading: ${query}`);
-                player.load('youtube', source);//TODO: option to switch sources?
+                player.load(id);
             });
     },
     'p': (...words) => {
@@ -42,7 +43,7 @@ const commands = {
 
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 }).on('line', line => {
     const [command, ...args] = line.split(' ');
     const action = commands[command];

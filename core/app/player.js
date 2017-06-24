@@ -5,8 +5,7 @@ const config = require('../../config.json').playback;
 const providers = require('./providers');
 
 class Player {
-    constructor(ffmpegPath) {
-        this._ffmpegPath = ffmpegPath;
+    constructor() {
         this._playing = false;
         this._audio = null;
         this._speaker = new Speaker({
@@ -20,18 +19,12 @@ class Player {
         return providers.search(query);
     }
 
-    load(source, song) {
-        const load = source => {
+    load(id) {
+        providers.load(id).then((source) => {
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
-            this._audio = source ? new AudioStream(source, this._ffmpegPath) : null;
+            this._audio = source ? new AudioStream(source) : null;
             if (this._playing && this._audio) this._audio.pipe(this._speaker);
-        };
-
-        if (source) {
-            providers.load(source, song).then(load);
-        } else {
-            load(null);
-        }
+        });
     }
 
     unload() {
