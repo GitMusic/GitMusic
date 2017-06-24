@@ -8,9 +8,9 @@
         }
     },
     "playback": {
-        "sampleRate": 44100,
+        "sampleRate": 48000,
         "channels": 2,
-        "bitDepth": 16
+        "bitDepth": 32
     },
     "server": {
       "port": 5004
