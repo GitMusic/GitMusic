@@ -2,11 +2,6 @@
     "developer": {
         "enabled": true
     },
-    "sources": {
-        "youtube": {
-            "key": "<API KEY HERE>"
-        }
-    },
     "playback": {
         "sampleRate": 48000,
         "channels": 2,
