@@ -43,6 +43,6 @@ module.exports = {
         });
     },
     load({ provider, id }) {
-        return providers.find((provider) => provider === provider).api.load(id);
+        return providers.find(p => p === provider).api.load(id);
     }
 };
