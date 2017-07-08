@@ -1,4 +1,3 @@
-const Promise = require('bluebird');
 const cheerio = require('cheerio');
 const chrono = require('chrono-node');
 const request = require('request-promise');
@@ -68,10 +67,11 @@ function parseDuration(duration) {
 
 module.exports = {
     search(query) {
+        console.log(`Searching for ${query}`);
         return search(query);
     },
-    load(id) {
-        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+    load(query) {
+        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(query)}`;
         return ytdl.getInfo(url).then(info => {
             const formats = info.formats;
             const audioFormats = formats.filter(format => {

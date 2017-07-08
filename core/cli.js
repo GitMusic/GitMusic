@@ -1,6 +1,7 @@
 const readline = require('readline');
 const process = require('process');
 
+const debug = require('./app/utils/debug');
 const Player = require('./app/player');
 
 const player = new Player();
@@ -11,19 +12,22 @@ const commands = {
 
         // Load the first result
         player.search(query)
-            .then((results) => results[0].id)
+            .then(results => {
+                debug.log(debug.level.info, results);
+                return results[0].id;
+            })
             .then((id) => {
-                console.log(`Loading: ${query}`);
+                debug.log(debug.level.info, `Loading: ${query}`);
                 player.load(id);
             });
     },
     'p': (...words) => {
         if (words.length === 0) {
             if (player.playing) {
-                console.log('Pausing');
+                debug.log(debug.level.info, 'Pausing');
                 player.pause();
             } else {
-                console.log('Playing');
+                debug.log(debug.level.info, 'Playing');
                 player.play();
             }
         } else {
@@ -32,7 +36,7 @@ const commands = {
         }
     },
     's': (seconds) => {
-        console.log(`Seeking: ${seconds}`);
+        debug.log(debug.level.info, `Seeking: ${seconds}`);
         player.seek(seconds);
     },
     'q': () => {

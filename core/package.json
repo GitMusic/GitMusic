@@ -21,6 +21,7 @@
     "request-promise": "^4.2.1",
     "util": "^0.10.3",
     "ws": "^3.0.0",
+    "youtube-search": "^1.0.10",
     "ytdl-core": "^0.14.4"
   }
 }
