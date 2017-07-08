@@ -17,7 +17,6 @@ module.exports = {
             .map(video => ({id: video.id})))
     },
     load(song) {
-        console.log("Loading song")
         const url = `https://www.youtube.com/watch?v=${encodeURIComponent(song)}`;
         return ytdl.getInfoAsync(url).then(info => {
             const formats = info.formats;

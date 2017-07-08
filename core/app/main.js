@@ -60,7 +60,7 @@ const commands = {
 
     },
     'seek': (args) => {
-        debug.log(debug.level.info, `Seeking: ${seconds}`);
+        debug.log(debug.level.info, `Seeking: ${args.time}`);
         player.seek(args.time);
     },
     // 'previous': {

@@ -21,9 +21,7 @@ class Player {
     }
 
     load(provider, id) {
-        console.log("loading derp")
         providers.load(provider, id).then(source => {
-            debug.log(source);
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
             this._audio = source ? new AudioStream(source) : null;
             if (this._playing && this._audio) this._audio.pipe(this._speaker);
