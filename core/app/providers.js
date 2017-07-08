@@ -38,7 +38,8 @@ const providers = fs.readdirSync(`${__dirname}/providers`)
       }
 
       if ('init' in api) {
-          api.init(config);
+          debug.log(debug.level.info, `Initializing ${id}...`);
+          api.init(config[id]);
       }
 
       return isValid;
@@ -46,17 +47,14 @@ const providers = fs.readdirSync(`${__dirname}/providers`)
 
 module.exports = {
     search(query) {
-        return Promise.all(providers.map(provider => {
-                provider.api.search(query)
-        })).then(result => {
-            debug.log(debug.level.info, result);
+        return Promise.all(providers.map(provider => provider.api.search(query))).then(result => {
             return result.map((results, index) => ({
                 provider: providers[index].id,
                 results: results
             }));
         });
     },
-    load(provider, query ) {
-        return providers.find(p => p === provider).provider.load(query);
+    load(provider, id) {
+        return providers.find(p => p.id === provider).api.load(id);
     }
 };

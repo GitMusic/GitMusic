@@ -3,6 +3,7 @@ const Speaker = require('audio-speaker');
 const AudioStream = require('./audio-stream');
 const config = require('../../config.json').playback;
 const providers = require('./providers');
+const debug = require('./utils/debug');
 
 class Player {
     constructor() {
@@ -19,8 +20,10 @@ class Player {
         return providers.search(query);
     }
 
-    load(id) {
-        providers.load(id).then((source) => {
+    load(provider, id) {
+        console.log("loading derp")
+        providers.load(provider, id).then(source => {
+            debug.log(source);
             if (this._playing && this._audio) this._audio.unpipe(this._speaker);
             this._audio = source ? new AudioStream(source) : null;
             if (this._playing && this._audio) this._audio.pipe(this._speaker);

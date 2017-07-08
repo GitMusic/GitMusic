@@ -67,7 +67,7 @@ function parseDuration(duration) {
 
 module.exports = {
     search(query) {
-        console.log(`Searching for ${query}`);
+        console.log(`dfdsfdsf for ${query}`);
         return search(query);
     },
     load(query) {

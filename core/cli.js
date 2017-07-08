@@ -8,18 +8,15 @@ const player = new Player();
 const commands = {
     'l': (...words) => {
         const query = words.join(' ');
-        console.log(`Searching: ${query}`);
+        debug.log(debug.level.info, `Searching: ${query}`);
 
         // Load the first result
         player.search(query)
             .then(results => {
-                debug.log(debug.level.info, results);
-                return results[0].id;
-            })
-            .then((id) => {
-                debug.log(debug.level.info, `Loading: ${query}`);
-                player.load(id);
-            });
+                debug.log(debug.level.info, `Loading: ${results[0].provider}`);
+
+                player.load(results[0].provider, results[0].results[0].id);
+            }).catch(console.log);
     },
     'p': (...words) => {
         if (words.length === 0) {
