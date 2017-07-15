@@ -16,16 +16,9 @@ module.exports = {
             .filter(result => result.kind == 'youtube#video')
             .map(video => ({id: video.id, title: video.title})))
     },
-    load(song) {
-        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(song)}`;
-        return ytdl.getInfoAsync(url).then(info => {
-            const formats = info.formats;
-            const audioFormats = formats.filter(format => {
-                return format.type.indexOf('audio') != -1;
-            });
-
-            const format = audioFormats[0] || formats[0];
-            return format.url;
-        });
+    load(id) {
+        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+        return ytdl.getInfo(url, {filter: 'audio'})
+            .then(info => info.formats[0].url);
     },
 };

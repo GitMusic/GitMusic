@@ -17,7 +17,7 @@ const commands = {
         player.search(query)
             .then(results => {
                 songs = results;
-                songs.forEach((song, index) => console.log(`Use ID ${index} to play song ${song.name} from ${song.provider}`));
+                songs.forEach((song, index) => console.log(`Use ID ${index} to play song ${song.title} from ${song.provider}`));
             }).catch(console.log);
     },
     queue: (index) => {

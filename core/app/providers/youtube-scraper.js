@@ -7,12 +7,12 @@ const ytdl = require('ytdl-core');
 function search(query, page) {
     const options = {
         url: 'https://www.youtube.com/results',
-        qs: { q: query, sp: page },
+        qs: {q: query, sp: page},
     };
 
     return request(options)
         .then(scrape)
-        .then(({ results, next }) => ({
+        .then(({results, next}) => ({
             results,
             next: next ? () => search(query, next) : null
         }));
@@ -54,7 +54,7 @@ function scrape(html) {
           url.parse(nextPager.attr('href'), true).query.sp :
           null;
 
-    return { results, next };
+    return {results, next};
 }
 
 function parseDuration(duration) {
@@ -69,9 +69,9 @@ module.exports = {
     search(query) {
         return search(query);
     },
-    load(query) {
-        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(query)}`;
-        return ytdl.getInfo(url).then(info => {
+    load(id) {
+        const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+        return ytdl.getInfo(url, {filter: 'audio'}).then(info => {
             const formats = info.formats;
             const audioFormats = formats.filter(format => {
                 return format.type.indexOf('audio') != -1;
