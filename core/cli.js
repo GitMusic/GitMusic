@@ -7,20 +7,17 @@ const Player = require('./app/player');
 const player = new Player();
 
 let songs = {};
-let loaded = false;
 
 const commands = {
     search: (...words) => {
         const query = words.join(' ');
         debug.log(debug.level.info, `Searching: ${query}`);
-        loaded = false;
 
         // Load the first result
         player.search(query)
             .then(results => {
-                loaded = true;
                 songs = results;
-                console.log(songs);
+                songs.forEach((song, index) => console.log(`Use ID ${index} to play song ${song.name} from ${song.provider}`));
             }).catch(console.log);
     },
     queue: (index) => {
@@ -32,7 +29,6 @@ const commands = {
         } else {
             player.playing ? player.pause() : player.play();
         }
-
     },
     seek: (seconds) => {
         debug.log(debug.level.info, `Seeking: ${seconds}`);
