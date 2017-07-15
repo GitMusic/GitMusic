@@ -40,6 +40,9 @@ const commands = {
     previous: () => {
         player.previous();
     },
+    volume: (percent) => {
+        player.volume(percent)
+    },
     exit: () => {
         debug.log(debug.level.info, 'Exiting');
         process.exit();

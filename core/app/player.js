@@ -32,7 +32,6 @@ class Player {
             this.stop();
             this._audio = source ? new AudioStream(source) : null;
             if (this._audio) {
-                this._audio.pipe(this._speaker);
                 this._loaded = true;
                 this.play();
             }
