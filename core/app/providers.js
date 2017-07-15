@@ -67,7 +67,7 @@ module.exports = {
             }));
         });
     },
-    load({provider, id}) {
+    load(provider, id) {
         return providers.find(p => p === provider).api.load(id);
     }
 };
