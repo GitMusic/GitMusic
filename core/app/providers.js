@@ -16,6 +16,9 @@ const providers = Object.entries(config.providers)
         if (!config.enabled) {
             debug.log(debug.level.warning, `Skipping disabled provider ${id}`);
             return false;
+        } else {
+            debug.log(debug.level.info, `Loading provider ${id}`);
+            return true;
         }
     })
 
@@ -27,7 +30,7 @@ const providers = Object.entries(config.providers)
 
     // Filter out providers that don't have the required methods
     .filter(({id, config, api}) => {
-        let isValid = requiredMethods
+        const isValid = requiredMethods
             .reduce((isValid, method) => isValid && method in api, true);
 
         if (!isValid) {
@@ -38,11 +41,15 @@ const providers = Object.entries(config.providers)
     })
 
     // Initialize provider
-    .map(({id, config, api}) => {
+    .map(provider => {
+        const {id, config, api} = provider;
+
         if ('init' in api) {
             debug.log(debug.level.info, `Initializing ${id}...`);
             api.init(config);
         }
+
+        return provider;
     });
 
 module.exports = {
