@@ -54,14 +54,20 @@ const providers = Object.entries(config.providers)
 
 module.exports = {
     search(query) {
-        return Promise.all(providers.map(provider => provider.api.search(query))).then(result => {
-            return result.map((results, index) => ({
-                provider: providers[index].id,
-                results: results
+        return Promise.all(providers.map(provider => {
+            return provider.api.search(query)
+        })).then(results => {
+            // Merge results from all providers
+            return [].concat.apply([], allResults.map(({results}, i) => {
+                const provider = providers[i].id;
+                return results.map(result => {
+                    result.provider = provider;
+                    return result;
+                });
             }));
         });
     },
-    load(provider, id) {
-        return providers.find(p => p.id === provider).api.load(id);
+    load({provider, id}) {
+        return providers.find(p => p === provider).api.load(id);
     }
 };
