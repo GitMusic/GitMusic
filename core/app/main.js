@@ -17,7 +17,7 @@ const wss = new WebSocketServer({
 });
 
 const commands = {
-    'search': (args) => new Promise((resolve, reject) => {
+    search: (args) => new Promise((resolve, reject) => {
         if (!args.query) {
             reject(errors.NO_QUERY_PROVIDED);
         } else {
@@ -27,7 +27,7 @@ const commands = {
         }
     }),
 
-    'play': (args) => {
+    play: (args) => {
         return new Promise((resolve, reject) => {
             if (!args.source || !args.song) {
                 reject(errors.NO_SONG_PROVIDED);
@@ -59,20 +59,20 @@ const commands = {
         });
 
     },
-    'seek': (args) => {
+    seek: (args) => {
         debug.log(debug.level.info, `Seeking: ${args.time}`);
         player.seek(args.time);
     },
-    // 'previous': {
-    //    player.previous();
-    // },
-    // 'next': () => {
-    //     player.next();
-    // },
-    // 'queue': (song) => {
-    //     player.queue(song);
-    // },
-    'quit': () => {
+    previous: () => {
+       player.previous();
+    },
+    next: () => {
+        player.next();
+    },
+    queue: (song) => {
+        player.queue(song);
+    },
+    quit: () => {
         debug.log(debug.level.warning, 'Exiting');
         wss.clients.forEach((client) => {
             client.send(JSON.stringify({
@@ -103,7 +103,7 @@ wss.on('connection', (ws) => {
     };
 
     ws.on('message', (message) => {
-        debug.log(debug.level.info, `Message "${message}" recieved from ${ws.upgradeReq.connection.remoteAddress}`);
+        debug.log(debug.level.info, `Message "${message}" received from ${ws.upgradeReq.connection.remoteAddress}`);
         try {
             message = JSON.parse(message);
             if (message.command) {
@@ -114,13 +114,8 @@ wss.on('connection', (ws) => {
                 }
 
                 commands[message.command](message.arguments || {}).then(
-                    results => {
-                        results && ws.reply(message.command, message.arguments, results);
-                        debug.log(debug.level.info, results);
-                    },
-                    error =>  {
-                        ws.error(error.code, error.message);
-                    }
+                    results => results && ws.reply(message.command, message.arguments, results),
+                    error => ws.error(error.code, error.message)
                 );
 
             } else {

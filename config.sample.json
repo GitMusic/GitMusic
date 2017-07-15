@@ -8,6 +8,15 @@
         "bitDepth": 32
     },
     "server": {
-      "port": 5004
+        "port": 5004
+    },
+    "providers": {
+        "youtube-scraper": {
+            "enabled": true
+        },
+        "youtube-api": {
+            "enabled": true,
+            "key": "<YOUR_API_KEY_HERE>"
+        }
     }
 }

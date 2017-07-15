@@ -6,7 +6,7 @@ const Player = require('./app/player');
 
 const player = new Player();
 const commands = {
-    'l': (...words) => {
+    l: (...words) => {
         const query = words.join(' ');
         debug.log(debug.level.info, `Searching: ${query}`);
 
@@ -18,7 +18,7 @@ const commands = {
                 player.load(results[0].provider, results[0].results[0].id);
             }).catch(console.log);
     },
-    'p': (...words) => {
+    p: (...words) => {
         if (words.length === 0) {
             if (player.playing) {
                 debug.log(debug.level.info, 'Pausing');
@@ -32,17 +32,17 @@ const commands = {
             commands.l.apply(null, words);
         }
     },
-    's': (seconds) => {
+    s: (seconds) => {
         debug.log(debug.level.info, `Seeking: ${seconds}`);
         player.seek(seconds);
     },
-    'q': () => {
-        console.log('Exiting');
+    q: () => {
+        debug.log('Exiting');
         process.exit();
     }
 };
 
-const rl = readline.createInterface({
+readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 }).on('line', line => {
@@ -55,7 +55,3 @@ const rl = readline.createInterface({
 
     action.apply(null, args);
 });
-
-if (process.argv.length > 2) {
-    commands.p.apply(null, process.argv.slice(2));
-}

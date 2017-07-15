@@ -14,6 +14,8 @@ class Player {
             channels: config.channels,
             bitDepth: config.bitDepth
         });
+        this._queue = [];
+        this._history = [];
     }
 
     search(query) {
@@ -28,12 +30,10 @@ class Player {
         });
     }
 
-    unload() {
-
-    }
-
     stop() {
-
+        this._audio.unpipe(this._speaker);
+        this._audio = null;
+        this._playing = false;
     }
 
     play() {
