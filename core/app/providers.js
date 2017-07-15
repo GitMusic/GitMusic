@@ -1,48 +1,48 @@
 const debug = require('./utils/debug');
 const fs = require('fs');
-const config = require('../../config.json').providers;
 
+const config = require('../../config.json');
 
-//Methods which providers are required to implement
+// Methods which providers are required to implement
 const requiredMethods = [
     'search',
     'load'
 ];
 
-const providers = fs.readdirSync(`${__dirname}/providers`)
-    .map(provider => provider.substr(0, provider.length - 3))
-    .filter(provider => {
-        let isValid = config[provider];
-        if (!isValid) {
-            debug.log(debug.level.warning, `Skipping provider ${provider}... Config was missing`);
-        }
+const providers = Object.entries(config.providers)
 
-        if (!config[provider].enabled) {
-            debug.log(debug.level.warning, `Skipping disabled provider ${provider}`);
-            isValid = false;
+    // Filter out providers that aren't enabled
+    .filter(([id, config]) => {
+        if (!config.enabled) {
+            debug.log(debug.level.warning, `Skipping disabled provider ${id}`);
+            return false;
         }
-        return isValid;
     })
-    .map(provider => {
-      return {
-          id: provider,
-          api: require(`./providers/${provider}`)
-      }
-    })
-    .filter(({ id, api }) => {
-      let isValid = requiredMethods
+
+    // Load provider
+    .map(([id, config]) => ({
+        id, config,
+        api: require(`./providers/${id}`),
+    }))
+
+    // Filter out providers that don't have the required methods
+    .filter(({id, config, api}) => {
+        let isValid = requiredMethods
             .reduce((isValid, method) => isValid && method in api, true);
 
-      if (!isValid) {
-          debug.log(debug.level.warning, `Skipping invalid provider ${id}`);
-      }
+        if (!isValid) {
+            debug.log(debug.level.warning, `Skipping invalid provider ${id}`);
+        }
 
-      if ('init' in api) {
-          debug.log(debug.level.info, `Initializing ${id}...`);
-          api.init(config[id]);
-      }
+        return isValid;
+    })
 
-      return isValid;
+    // Initialize provider
+    .map(({id, config, api}) => {
+        if ('init' in api) {
+            debug.log(debug.level.info, `Initializing ${id}...`);
+            api.init(config);
+        }
     });
 
 module.exports = {
