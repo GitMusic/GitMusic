@@ -58,7 +58,7 @@ module.exports = {
             return provider.api.search(query)
         })).then(results => {
             // Merge results from all providers
-            return [].concat.apply([], results.map(({results}, i) => {
+            return [].concat.apply([], results.map((results, i) => {
                 const provider = providers[i].id;
                 return results.map(result => {
                     result.provider = provider;

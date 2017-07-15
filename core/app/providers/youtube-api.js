@@ -14,7 +14,7 @@ module.exports = {
             key: settings.key
         }).then(results => results
             .filter(result => result.kind == 'youtube#video')
-            .map(video => ({id: video.id, title: video.title})))
+            .map(video => ({id: video.id, title: video.title})));
     },
     load(id) {
         const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;

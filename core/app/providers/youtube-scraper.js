@@ -67,18 +67,12 @@ function parseDuration(duration) {
 
 module.exports = {
     search(query) {
-        return search(query);
+        return search(query)
+            .then(({results}) => results);
     },
     load(id) {
         const url = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
-        return ytdl.getInfo(url, {filter: 'audio'}).then(info => {
-            const formats = info.formats;
-            const audioFormats = formats.filter(format => {
-                return format.type.indexOf('audio') != -1;
-            });
-
-            const format = audioFormats[0] || formats[0];
-            return format.url;
-        });
+        return ytdl.getInfo(url, {filter: 'audio'})
+            .then(info => info.formats[0].url);
     },
 };
