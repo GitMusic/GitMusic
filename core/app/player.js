@@ -8,6 +8,7 @@ const debug = require('./utils/debug');
 class Player {
     constructor() {
         this._playing = false;
+        this._loaded = false;
         this._audio = null;
         this._speaker = new Speaker({
             sampleRate: config.sampleRate,
@@ -23,17 +24,28 @@ class Player {
     }
 
     load(provider, id) {
+        this._history.push({
+            provider: provider,
+            id: id
+        });
         providers.load(provider, id).then(source => {
-            if (this._playing && this._audio) this._audio.unpipe(this._speaker);
+            this.stop();
             this._audio = source ? new AudioStream(source) : null;
-            if (this._playing && this._audio) this._audio.pipe(this._speaker);
+            if (this._audio) {
+                this._audio.pipe(this._speaker);
+                this._loaded = true;
+                this.play();
+            }
         });
     }
 
     stop() {
-        this._audio.unpipe(this._speaker);
-        this._audio = null;
-        this._playing = false;
+        if (this._audio) {
+            this._audio.unpipe(this._speaker);
+            this._audio = null;
+            this._playing = false;
+            this._loaded = false;
+        }
     }
 
     play() {
@@ -54,15 +66,30 @@ class Player {
     }
 
     volume(volume) {
-        console.log('volume');
+        debug.log(debug.level.info, 'volume');
     }
 
     next() {
-        console.log('next');
+        if(this._queue.length > 0) {
+            let next = this._queue.shift();
+            this.load(next.provider, next.id);
+        }
     }
 
-    prev() {
-        console.log('prev');
+    previous() {
+        //TODO: Deal with empty history
+        if (this._history.length > 0) {
+            let next = this._history.pop();
+        } else {
+            debug.log(debug.level.warning, "No songs in history")
+        }
+    }
+
+    queue(provider, id) {
+        this._queue.push({
+            p: provider,
+            i: id
+        });
     }
 
     shuffle(state) {
@@ -71,6 +98,10 @@ class Player {
 
     get playing() {
         return this._playing;
+    }
+
+    get loaded() {
+        return this._loaded;
     }
 }
 
