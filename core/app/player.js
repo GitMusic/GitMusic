@@ -15,8 +15,8 @@ class Player {
             channels: config.channels,
             bitDepth: config.bitDepth
         });
-        this._queue = [];
-        this._history = [];
+        this._songs = [];
+        this._currentSong = -1;
     }
 
     search(query) {
@@ -24,11 +24,17 @@ class Player {
     }
 
     load(provider, id) {
-        this._history.push({
+        this._currentSong++;
+        this._songs.splice(this._currentSong, 0, {
             provider: provider,
             id: id
         });
-        providers.load(provider, id).then(source => {
+        this._load();
+    }
+
+    _load() {
+        let current = this._songs[this._currentSong];
+        providers.load(current.provider, current.id).then(source => {
             this.stop();
             this._audio = source ? new AudioStream(source) : null;
             if (this._audio) {
@@ -69,25 +75,28 @@ class Player {
     }
 
     next() {
-        if(this._queue.length > 0) {
-            let next = this._queue.shift();
-            this.load(next.provider, next.id);
+        if(this._songs.length > 0 && this._currentSong < this._songs.length -1) {
+            this._currentSong++;
+            this._load();
+        } else {
+            debug.log(debug.level.warning, "Reached end of queue")
         }
     }
 
     previous() {
         //TODO: Deal with empty history
-        if (this._history.length > 0) {
-            let next = this._history.pop();
+        if (this._songs.length > 0 && this._currentSong > 1) {
+            this._currentSong--;
+            this._load()
         } else {
             debug.log(debug.level.warning, "No songs in history")
         }
     }
 
     queue(provider, id) {
-        this._queue.push({
-            p: provider,
-            i: id
+        this._songs.push({
+            provider: provider,
+            id: id
         });
     }
 
