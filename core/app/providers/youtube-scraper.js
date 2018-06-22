@@ -25,23 +25,30 @@ function scrape(html) {
     const content = $('#content');
     content.find('.yt-lockup-video:not(:has(.yt-badge-ad))').each((i, elem) => {
         const video = $(elem);
+        const title = video.find('.yt-lockup-title a');
+        const by = video.find('.yt-lockup-byline a');
+        const description = video.find('.yt-lockup-description');
+        const duration = video.find('.video-time');
+        const meta = video.find('.yt-lockup-meta li');
+        const date = meta.eq(0);
+        const views = meta.eq(1);
+        const badges = video.find('.yt-badge');
+        const thumbnail = video.find('.yt-thumb-simple img');
         results.push({
             id: video.data('context-item-id'),
-            url: video.find('.yt-lockup-title a').attr('href'),
-            title: video.find('.yt-lockup-title a').text(),
+            url: title.attr('href'),
+            title: title.text(),
             by: {
-                name: video.find('.yt-lockup-byline a').text(),
-                url: video.find('.yt-lockup-byline a').attr('href'),
+                name: by.text(),
+                url: by.attr('href'),
                 verified: video.find('.yt-channel-title-icon-verified').length != 0
             },
-            description: video.find('.yt-lockup-description').text(),
-            duration: parseDuration(video.find('.video-time').text()),
-            date: chrono.parseDate(video.find('.yt-lockup-meta li').eq(0).text()),
-            views: parseInt(video.find('.yt-lockup-meta li').eq(1).text().replace(/,/g, '')),
-            badges: video.find('.yt-badge').map((i, bage) => $(bage).text()).get(),
-
-            // TODO: Figure out how to query missing thumbnails
-            thumbnail: video.find('.yt-thumb-simple img').attr('src'),
+            description: description.text(),
+            thumbnail: thumbnail.data('thumb') || thumbnail.attr('src'),
+            duration: parseDuration(duration.text()),
+            date: chrono.parseDate(date.text()),
+            views: parseInt(views.text().replace(/,/g, '')),
+            badges: badges.map((i, bage) => $(bage).text()).get(),
         });
     });
 
