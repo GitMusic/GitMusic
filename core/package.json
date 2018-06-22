@@ -10,15 +10,12 @@
   "license": "GPL-3.0",
   "dependencies": {
     "audio-speaker": "^1.2.4",
-    "buffer-to-arraybuffer": "0.0.4",
     "cheerio": "^1.0.0-rc.1",
     "chrono-node": "^1.3.4",
     "colors": "^1.1.2",
     "ffmpeg-static": "^2.0.0",
     "request": "^2.81.0",
-    "request-progress": "^3.0.0",
     "request-promise": "^4.2.1",
-    "util": "^0.10.3",
     "ws": "^3.0.0",
     "youtube-search": "^1.0.10",
     "ytdl-core": "^0.14.4"
