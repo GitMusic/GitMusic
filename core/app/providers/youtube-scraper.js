@@ -12,17 +12,22 @@ function search(query, page) {
 
     return request(options)
         .then(scrape)
-        .then(({results, next}) => ({
-            results,
-            next: next ? () => search(query, next) : null
+        .then(({prev, next, ...rest}) => ({
+            prev: prev ? () => search(query, prev) : null,
+            next: next ? () => search(query, next) : null,
+            ...rest,
         }));
 }
 
 function scrape(html) {
-    const results = [];
-
     const $ = cheerio.load(html);
     const content = $('#content');
+    const numResults = parseInt(content.find('.num-results')
+                                .text()
+                                .match(/[0-9,]+/)[0]
+                                .replace(/,/g, ''));
+
+    const results = [];
     content.find('.yt-lockup-video:not(:has(.yt-badge-ad))').each((i, elem) => {
         const video = $(elem);
         const title = video.find('.yt-lockup-title a');
@@ -52,16 +57,13 @@ function scrape(html) {
         });
     });
 
-    const nextPager = content
-          .find('.search-pager')
-          .find('a, button')
-          .last();
+    const pagers = content.find('.search-pager').find('a, button');
+    const [prev, next] = [pagers.first(), pagers.last()]
+          .map((pager) => pager.attr('href') ?
+               url.parse(pager.attr('href'), true).query.sp :
+               null);
 
-    const next = nextPager.attr('href') ?
-          url.parse(nextPager.attr('href'), true).query.sp :
-          null;
-
-    return {results, next};
+    return {numResults, results, prev, next};
 }
 
 function parseDuration(duration) {
