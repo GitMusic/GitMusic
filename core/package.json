@@ -9,7 +9,6 @@
   "author": "MetaDark",
   "license": "GPL-3.0",
   "dependencies": {
-    "audio-speaker": "^1.5.0",
     "cheerio": "^1.0.0-rc.2",
     "chrono-node": "^1.3.5",
     "colors": "^1.3.0",

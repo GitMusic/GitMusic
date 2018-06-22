@@ -1,4 +1,4 @@
-const Speaker = require('audio-speaker');
+const Speaker = require('speaker');
 
 const AudioStream = require('./audio-stream');
 const config = require('../../config.json').playback;
