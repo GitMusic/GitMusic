@@ -1,6 +1,5 @@
-const Promise = require('bluebird');
-const ytsearch = Promise.promisify(require('youtube-search'));
-const ytdl = Promise.promisifyAll(require('ytdl-core'));
+const ytsearch = require('youtube-search');
+const ytdl = require('ytdl-core');
 
 let settings;
 
@@ -12,7 +11,7 @@ module.exports = {
         return ytsearch(query, {
             maxResults: 5,
             key: settings.key
-        }).then(results => results
+        }).then(({results}) => results
             .filter(result => result.kind == 'youtube#video')
             .map(video => ({id: video.id, title: video.title})));
     },
