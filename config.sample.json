@@ -1,6 +1,7 @@
 {
     "developer": {
-        "enabled": true
+        "enabled": true,
+        "ffmpegDebug": true
     },
     "playback": {
         "sampleRate": 48000,

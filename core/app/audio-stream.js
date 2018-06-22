@@ -41,7 +41,7 @@ class AudioStream extends Readable {
             this.push(null);
         });
 
-        if (config.developer.ffmpegDebug) {
+        if (config.developer.enabled && config.developer.ffmpegDebug) {
             ffmpeg.stderr.pipe(stderr);
         }
     }
