@@ -15,7 +15,7 @@
             "enabled": true
         },
         "youtube-api": {
-            "enabled": true,
+            "enabled": false,
             "key": "<YOUR_API_KEY_HERE>"
         }
     }
