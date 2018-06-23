@@ -16,7 +16,7 @@
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
     "speaker": "^0.4.1",
-    "ws": "^3.3.3",
+    "ws": "^5.2.1",
     "youtube-search": "^1.1.1",
     "ytdl-core": "^0.20.4"
   }
